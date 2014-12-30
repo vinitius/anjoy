@@ -47,12 +47,16 @@ public class GreatAsyncTask extends AsyncTask<String,Void,String> {
 
 		//Will only process data if someone is waiting for the result (ResultListener != null)
 		if (mResultListener != null){
-			if (mParseListener != null){				
+			if (mParseListener != null && result != null){				
 				try{ //Trying to successfully parse the upcoming data
 					Object parsedData = mParseListener.onDataReceivedToParse(mOperationCode, result);
 					mResultListener.onSuccessfullyDataReceived(mOperationCode, parsedData);
 				}catch(Exception error){ //Something went wrong during the parse
-					mResultListener.onErrorCaught(Integer.valueOf(result),error, error.getMessage());
+					try{
+						mResultListener.onErrorCaught(Integer.valueOf(result),error, error.getMessage());
+					}catch (NumberFormatException e){ //Response is not a status code
+						mResultListener.onErrorCaught(0,error,error.getMessage());
+					}
 				}
 			}else if (mParseListener == null && result != null){ //If no parser is set and the result is valid, it should be sent directly to whom is waiting 
 				mResultListener.onSuccessfullyDataReceived(mOperationCode, result);

@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="Connection_Error_Title">Erro na conexão</string>
+    <string name="Connection_Error_Description">Parece que você tem um problema na sua conexão</string>
+    <string name="Connection_Error_Solution">Por favor, cheque sua conexão e tente de novo</string>
+    <string name="Not_Found_Error_Title">Nenhum resultado encontrado</string>
+    <string name="Not_Found_Error_Description">Nenhum resultado foi retornado</string>
+    <string name="Not_Found_Error_Solution">Por favor, cheque sua conexão e tente de novo</string>
+    <string name="Denied_Error_Title">Não autorizado</string>
+    <string name="Denied_Error_Description">Parece que você não tem autorização fazer isso</string>
+    <string name="Denied_Error_Solution">Por favor, cheque sua conexão e tente de novo</string>
+    <string name="Server_Error_Title">Erro no servidor</string>
+    <string name="Server_Error_Description">Parece que temos alguns problemas com nossos servidores. Por favor, tente novamente mais tarde</string>
+    <string name="Server_Error_Solution">Por favor, cheque sua conexão e tente de novo</string>
+    <string name="Unknown_Error_Title">Erro</string>
+    <string name="Unknown_Error_Description">Por favor, tente novamente mais tarde</string>
+    <string name="Unknown_Error_Solution">Por favor, cheque sua conexão e tente de novo</string>
+
+</resources>

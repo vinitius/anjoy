@@ -3,8 +3,7 @@ package br.org.mantra.anjoy.controller;
 import br.org.mantra.anjoy.async.task.GreatAsyncTask;
 import br.org.mantra.anjoy.listener.ParseListener;
 
-public class GreatController implements ParseListener {
-
+public abstract class GreatController implements ParseListener {
 
 
 	public void doWebRequest(GreatAsyncTask task, String...params){
@@ -16,7 +15,7 @@ public class GreatController implements ParseListener {
 
 	// To be implemented by each child
 	@Override
-	public Object onDataReceivedToParse(int operationCode, String data) {
+	public Object onDataReceivedToParse(int operationCode, String data) throws Exception{
 
 		return null;
 	}

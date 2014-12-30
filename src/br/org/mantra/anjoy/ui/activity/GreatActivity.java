@@ -12,7 +12,7 @@ public class GreatActivity extends FragmentActivity {
 
 		FragmentTransaction fragmentTransaction = 
 				getSupportFragmentManager().beginTransaction().
-				replace(containerId, fragment);
+				add(containerId, fragment);
 
 		if (addToBackStack) fragmentTransaction.addToBackStack(null);
 

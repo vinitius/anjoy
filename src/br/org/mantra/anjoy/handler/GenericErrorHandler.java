@@ -52,8 +52,10 @@ public class GenericErrorHandler extends GreatErrorHandler {
 
 		LogUtils.logErrorForAnjoy("StackTrace:");
 		exception.printStackTrace();
-		LogUtils.logErrorForAnjoy("Message:");
-		LogUtils.logErrorForAnjoy(message);
+		if (message != null){
+			LogUtils.logErrorForAnjoy("Message:");
+			LogUtils.logErrorForAnjoy(message);
+		}
 		//LogUtils.logInfoForAnjoy("Possible Cause: "+cause);
 		LogUtils.logInfoForAnjoy("Possible Solution: "+solution);
 

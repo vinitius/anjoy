@@ -21,6 +21,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import android.util.Log;
+import br.org.mantra.anjoy.session.ControlledSession;
 import br.org.mantra.anjoy.util.ConnectionUtils.HTTPStatus;
 
 public class RestClient {
@@ -28,10 +29,16 @@ public class RestClient {
 	private String mToken;
 	private String mUserAgent;
 	private String mHost;
+	private String mBaseUrl;
 	private List<NameValuePair> mPostParams;
 	private String mPostBody;
 
 	public RestClient(){
+		this.mHost = ControlledSession.getInstance().
+				get(ControlledSession.REST_CLIENT_HOST).toString();
+
+		this.mBaseUrl = ControlledSession.getInstance().
+				get(ControlledSession.REST_CLIENT_BASE_URL).toString();
 
 	}
 
@@ -52,6 +59,7 @@ public class RestClient {
 
 	public String execute(String url, RequestMethod requestMethod ){
 
+		url = this.mBaseUrl + url;
 
 		if (requestMethod == RequestMethod.GET)
 			return executeGet(url);
@@ -130,8 +138,8 @@ public class RestClient {
 		// add header
 		post.setHeader("Host", mHost);
 		post.setHeader("User-Agent", mUserAgent);
-		post.setHeader("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		//post.setHeader("Accept",
+				//"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		post.setHeader("Accept-Language", "en-US,en;q=0.5");
 		//post.setHeader("Accept-Encoding", "gzip, deflate");
 		post.setHeader("Connection", "keep-alive");

@@ -14,7 +14,7 @@ public abstract class SplashScreenActivity extends GreatActivity{
 	protected void onCreate(Bundle arg0) {	
 		super.onCreate(arg0);
 
-		setContentView(getSplashResource());
+		setContentView(getSplashResource());	
 
 		new Handler().postDelayed(new Runnable() {
 

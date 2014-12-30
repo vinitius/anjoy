@@ -30,7 +30,7 @@ public class GreatFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		doWhenFragmentIsReady();
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return mViewToInflate;
 	}
 
 	protected void doWhenFragmentIsReady(){
