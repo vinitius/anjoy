@@ -117,7 +117,7 @@ public class RestClient {
 
 			Log.i("###", "Result : " + result);
 
-			if (responseCode == Integer.valueOf(HTTPStatus.SUCCESS))
+			if (responseCode == Integer.valueOf(HTTPStatus.SUCCESS) && !result.toString().equals(""))
 				return result.toString();
 			else
 				return String.valueOf(responseCode);
@@ -139,7 +139,7 @@ public class RestClient {
 		post.setHeader("Host", mHost);
 		post.setHeader("User-Agent", mUserAgent);
 		//post.setHeader("Accept",
-				//"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		//"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		post.setHeader("Accept-Language", "en-US,en;q=0.5");
 		//post.setHeader("Accept-Encoding", "gzip, deflate");
 		post.setHeader("Connection", "keep-alive");
@@ -185,7 +185,7 @@ public class RestClient {
 				result.append(line);
 			}
 
-			if (responseCode == HTTPStatus.SUCCESS)
+			if (responseCode == HTTPStatus.SUCCESS  && !result.toString().equals(""))
 				return result.toString();
 			else
 				return String.valueOf(responseCode);

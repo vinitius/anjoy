@@ -6,7 +6,7 @@ import br.org.mantra.anjoy.preference.AnjoyPreferences;
 import br.org.mantra.anjoy.session.ControlledSession;
 import br.org.mantra.anjoy.util.LogUtils;
 
-public class USER extends POJO {
+public class USER extends MODEL {
 
 	/**
 	 * 

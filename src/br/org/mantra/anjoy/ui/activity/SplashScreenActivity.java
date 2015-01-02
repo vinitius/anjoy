@@ -28,4 +28,9 @@ public abstract class SplashScreenActivity extends GreatActivity{
 		}, getSplashDurationInMilliseconds());
 	}
 
+	
+	@Override
+	protected int getRootViewContainer() {	
+		return 0;
+	}
 }

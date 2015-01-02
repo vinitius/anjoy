@@ -4,17 +4,18 @@ import android.content.Intent;
 import br.org.mantra.anjoy.controller.GreatController;
 import br.org.mantra.anjoy.controller.SessionController;
 import br.org.mantra.anjoy.handler.GreatErrorHandler;
-import br.org.mantra.anjoy.listener.ProgressListener;
 import br.org.mantra.anjoy.model.USER;
 import br.org.mantra.anjoy.session.ControlledSession;
 import br.org.mantra.anjoy.ui.adapter.GreatAdapter;
 
-public class LoginFragment extends ControlledFragment{
+public abstract class LoginFragment extends ControlledFragment{
 
 	private Class<?> mActivityToStartAfterAuthentication;
 
-	protected void doLogin(LoginFragment loginFragment, ProgressListener progressListener,String...loginData){		
-		((SessionController)getController()).onLogin(loginFragment,progressListener,loginData);		
+	protected void doLogin(USER user){
+		getControlledSession().set(ControlledSession.SESSION_CONTROLLER, getSessionController());
+		getSessionController().loadModel(user);
+		getSessionController().onLogin();		
 	}
 
 	protected void onSuccessfullAuthentication(USER loggedUser){
@@ -38,19 +39,21 @@ public class LoginFragment extends ControlledFragment{
 		onSuccessfullAuthentication((USER)result);
 	}
 
+	protected abstract SessionController getSessionController();
+	protected abstract ControlledSession getControlledSession();
+	
 	@Override
-	protected GreatController onSetController() {		
-		return (SessionController)
-				ControlledSession.getInstance().get(ControlledSession.SESSION_CONTROLLER);
-	}
-
-	@Override
-	protected GreatAdapter onSetAdapter() {		
+	protected GreatController onSetController() {	
 		return null;
 	}
-
+	
 	@Override
-	protected GreatErrorHandler onSetErrorHandler() {		
+	protected GreatAdapter onSetAdapter() {	
+		return null;
+	}
+	
+	@Override
+	protected GreatErrorHandler onSetErrorHandler() {	
 		return null;
 	}
 

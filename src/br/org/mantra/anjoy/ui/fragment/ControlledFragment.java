@@ -27,17 +27,7 @@ public abstract class ControlledFragment extends GreatFragment implements AsyncR
 		mAdapter = onSetAdapter();
 		mErrorHandler = onSetErrorHandler() != null
 				? onSetErrorHandler() : new GenericErrorHandler();
-
-
-
-
 	}
-
-
-
-
-
-
 
 	// To be implemented by each child
 	@Override

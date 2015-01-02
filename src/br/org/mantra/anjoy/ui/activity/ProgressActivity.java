@@ -5,7 +5,7 @@ import br.org.mantra.anjoy.listener.ProgressListener;
 import br.org.mantra.anjoy.ui.dialog.ProgressDialogFragment;
 
 
-public class ProgressActivity extends GreatActivity implements ProgressListener {
+public abstract class ProgressActivity extends GreatActivity implements ProgressListener {
 	
 	ProgressDialogFragment mProgressDialog;
 

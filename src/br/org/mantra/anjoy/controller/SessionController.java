@@ -2,13 +2,16 @@ package br.org.mantra.anjoy.controller;
 
 import br.org.mantra.anjoy.listener.AsyncResultListener;
 import br.org.mantra.anjoy.listener.ProgressListener;
-import br.org.mantra.anjoy.model.USER;
-import br.org.mantra.anjoy.ui.fragment.LoginFragment;
+import br.org.mantra.anjoy.model.MODEL;
 
 public abstract class SessionController extends GreatController{
 
-	public abstract void onLogin(LoginFragment loginFragment, ProgressListener progressListener,String...loginData);
-	public abstract void onLogout(AsyncResultListener resultListener, ProgressListener progressListener);
+	public SessionController(ProgressListener progressListener,
+			AsyncResultListener asyncResultListener, MODEL modelInstance) {
+		super(progressListener, asyncResultListener, modelInstance);		
+	}
+	public abstract void onLogin();
+	public abstract void onLogout();
 	public abstract void onRestoreSession();
 	public abstract void onClearSession();
 
