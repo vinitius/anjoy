@@ -3,21 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ListView
+    <FrameLayout
         android:id="@+id/left_drawer"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:background="@color/White" />
 
     <FrameLayout
         android:id="@+id/view_main"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <ListView
+    <FrameLayout
         android:id="@+id/right_drawer"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:background="@color/White" />

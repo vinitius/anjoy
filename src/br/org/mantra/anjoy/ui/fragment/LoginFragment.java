@@ -22,6 +22,7 @@ public abstract class LoginFragment extends ControlledFragment{
 		ControlledSession.getInstance().set(ControlledSession.CURRENT_LOGGED_USER, loggedUser);
 		Intent i = new Intent(mActivity, getActivityToStartAfterAuthentication());		
 		startActivity(i);
+		mActivity.finish();
 	}
 
 	public Class<?> getActivityToStartAfterAuthentication() {
@@ -41,17 +42,17 @@ public abstract class LoginFragment extends ControlledFragment{
 
 	protected abstract SessionController getSessionController();
 	protected abstract ControlledSession getControlledSession();
-	
+
 	@Override
 	protected GreatController onSetController() {	
 		return null;
 	}
-	
+
 	@Override
 	protected GreatAdapter onSetAdapter() {	
 		return null;
 	}
-	
+
 	@Override
 	protected GreatErrorHandler onSetErrorHandler() {	
 		return null;

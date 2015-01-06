@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.widget.ImageView;
+import br.org.mantra.anjoy.R;
 import br.org.mantra.anjoy.util.ImageUtils;
 
 public class ImageLoader {
@@ -62,7 +63,7 @@ public class ImageLoader {
 	}
 
 	// default image show in list (Before online image download)
-	int stub_id= 0;
+	int stub_id= R.drawable.stub;
 
 	int requiredSize = 0;
 
@@ -139,8 +140,8 @@ public class ImageLoader {
 	public void displayImage(String url, ImageView imageView, int stub_id)
 	{
 
-
-		this.stub_id = stub_id;
+		if (stub_id != 0)
+			this.stub_id = stub_id;
 
 		//Store image and url in Map
 		imageViews.put(imageView, url);

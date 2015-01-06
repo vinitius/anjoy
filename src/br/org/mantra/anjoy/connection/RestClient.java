@@ -80,8 +80,8 @@ public class RestClient {
 		// add header
 		get.setHeader("Host", mHost);
 		get.setHeader("User-Agent", mUserAgent);
-		get.setHeader("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		//get.setHeader("Accept",
+		//"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		get.setHeader("Accept-Language", "en-US,en;q=0.5");
 		//get.setHeader("Accept-Encoding", "gzip, deflate");
 		get.setHeader("Connection", "keep-alive");

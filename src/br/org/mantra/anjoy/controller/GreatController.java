@@ -3,13 +3,14 @@ package br.org.mantra.anjoy.controller;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import com.google.gson.Gson;
-
 import br.org.mantra.anjoy.async.task.GreatAsyncTask;
 import br.org.mantra.anjoy.listener.AsyncResultListener;
 import br.org.mantra.anjoy.listener.ParseListener;
 import br.org.mantra.anjoy.listener.ProgressListener;
 import br.org.mantra.anjoy.model.MODEL;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public abstract class GreatController implements ParseListener {
 
@@ -98,6 +99,10 @@ public abstract class GreatController implements ParseListener {
 
 	public Gson getGSONParser() {
 		return mGSONParser;
+	}
+	
+	public void setGSONParserFromBuilder(GsonBuilder builder) {
+		mGSONParser = builder.create();
 	}
 
 	public String getModelAsJSON(){

@@ -9,8 +9,8 @@ import br.org.mantra.anjoy.ui.activity.GreatActivity;
 
 public class GreatAdapter extends BaseAdapter {
 
-	protected GreatActivity mActivity;
-	protected List<?> mItems;
+	private GreatActivity mActivity;
+	private List<?> mItems;
 
 	public GreatAdapter(GreatActivity context,List<?> collection){
 		this.mActivity = context;
@@ -40,6 +40,26 @@ public class GreatAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		return null;
+	}
+
+
+	public GreatActivity getContext() {
+		return mActivity;
+	}
+
+
+	public void setContext(GreatActivity mActivity) {
+		this.mActivity = mActivity;
+	}
+
+
+	public List<?> getCollection() {
+		return mItems;
+	}
+
+
+	public void setCollection(List<?> mItems) {
+		this.mItems = mItems;
 	}
 
 }
