@@ -7,5 +7,11 @@ GSON;
 
 Crouton;
 
+StaggeredGrid;
+
+RippleView;
+
+TouchGallery;
+
 ... work in progress ...
 ========================
