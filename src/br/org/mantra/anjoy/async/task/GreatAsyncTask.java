@@ -8,7 +8,7 @@ import br.org.mantra.anjoy.listener.AsyncResultListener;
 import br.org.mantra.anjoy.listener.ParseListener;
 import br.org.mantra.anjoy.listener.ProgressListener;
 
-public class GreatAsyncTask extends AsyncTask<String,Void,String> {
+public abstract class GreatAsyncTask extends AsyncTask<String,Void,String> {
 
 	private ProgressListener mProgressListener;
 	private AsyncResultListener mResultListener;
@@ -67,11 +67,27 @@ public class GreatAsyncTask extends AsyncTask<String,Void,String> {
 		}
 	}
 
-	// To be implemented by each child
 	@Override
-	protected String doInBackground(String... params) {		
-		return null;
+	protected String doInBackground(String... params) {	
+
+		StringBuffer buffer = new StringBuffer();
+		for(String s:params){
+			buffer.append(s);			
+		}		
+
+		if (shouldIgnoreExecutionParams())
+			return mRestClient.execute(getRequestPattern(), getRequestMethod());
+		else
+			return mRestClient.execute(getRequestPattern()+buffer.toString(), getRequestMethod());
+
 	}
+
+	protected abstract String getRequestPattern();
+	protected abstract RestClient.RequestMethod getRequestMethod();
+	protected abstract boolean shouldIgnoreExecutionParams();
+
+
+
 
 
 

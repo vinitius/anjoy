@@ -47,6 +47,11 @@ public abstract class ScreenUtils {
 		return (int) px;
 
 	}
+	
+	public static int dp2px(Activity context,int dp) {
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+				context.getResources().getDisplayMetrics());
+	}
 
 
 }

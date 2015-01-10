@@ -1,10 +1,10 @@
 package br.org.mantra.anjoy.ui.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,59 +13,49 @@ import android.view.View;
 import android.view.ViewGroup;
 import br.org.mantra.anjoy.ui.activity.GreatActivity;
 
-public class GreatFragment extends Fragment {
+public abstract class GreatFragment extends Fragment {
 
 	protected GreatActivity mActivity; 
-	protected View mViewToInflate;
-	private HashMap<Integer, Class<?>> mViewHash;
+	private View mViewToInflate;	
+	private HashMap<String, Integer> mViewTagHash;
+
+	protected abstract void beforeBindViews(Bundle savedInstance);
+	protected abstract void afterBindViews();
+	protected abstract void onSetListeners();
+	protected abstract int getLayoutToBeInflated();
+
 
 	@Override
 	public void onAttach(Activity activity) {	
 		super.onAttach(activity);
 		if (activity instanceof GreatActivity)
 			mActivity = (GreatActivity)activity;
+
+
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		doWhenFragmentIsReady();
-		return mViewToInflate;
+		this.beforeBindViews(savedInstanceState);
+		this.mViewToInflate = inflater.inflate(getLayoutToBeInflated(), container,false);
+		this.doWhenFragmentIsReady();
+		return getRootView();
 	}
 
-	protected void doWhenFragmentIsReady(){
-		this.beforeBindViews();
-		this.onBindViews();
-		this.afterBindViews();		
-	}
-
-	protected void beforeBindViews(){
-		this.mountViewHash();
-	}
-
-	protected void onBindViews(){}
-
-	protected void afterBindViews(){
+	protected void doWhenFragmentIsReady(){				
+		this.mountViewHashTag();
+		this.bindViews();			
+		this.afterBindViews();
 		this.onSetListeners();
 	}
 
-	protected void onSetListeners(){}
-
-	protected <T> T bindTo(int viewIdInResource, Class<T> cls){		
-		return cls.cast(mViewToInflate.findViewById(viewIdInResource));		
-	}
-
-	@SuppressWarnings("unchecked")
-	protected <T> T bindTo(int viewIdInResource){		
-		return (T)mViewHash.get(viewIdInResource).cast(mViewToInflate.findViewById(viewIdInResource));		
-	}
 
 
-	@SuppressLint("UseSparseArrays") 
-	private void mountViewHash(){ 
+	private void mountViewHashTag(){
 
-		if (mViewHash == null)
-			mViewHash = new HashMap<Integer, Class<?>>();
+		if (mViewTagHash == null)
+			mViewTagHash = new HashMap<String, Integer>();
 
 		List<View> visited = new ArrayList<View>();
 		List<View> unvisited = new ArrayList<View>();
@@ -73,18 +63,38 @@ public class GreatFragment extends Fragment {
 		while (!unvisited.isEmpty()) {
 			View child = unvisited.remove(0);
 			visited.add(child);
-			mViewHash.put(child.getId(), child.getClass());
+			if (child.getTag() != null)
+				mViewTagHash.put(child.getTag().toString(), child.getId());
 			if (!(child instanceof ViewGroup)) continue;
 			ViewGroup group = (ViewGroup) child;
 			final int childCount = group.getChildCount();
 			for (int i=0; i<childCount; i++) unvisited.add(group.getChildAt(i));
 		}
 
-
-
-
 	}
 
+	private void bindViews(){
+		Field[] fields = getClass().getDeclaredFields();
+		for(Field field : fields){
+			field.setAccessible(true);
+			Class<?> fieldClass = field.getType();	
+			Integer viewId = mViewTagHash.get(field.getName());
+			if (viewId != null){
+				try {
+					field.set(this,fieldClass.cast(mViewToInflate.findViewById(viewId)));
+				} catch (IllegalAccessException e) {				
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {				
+					e.printStackTrace();
+				}
+			}
+
+		}
+	}
+
+	public View getRootView(){
+		return mViewToInflate;
+	}
 
 
 

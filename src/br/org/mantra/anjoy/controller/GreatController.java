@@ -12,7 +12,7 @@ import br.org.mantra.anjoy.model.MODEL;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public abstract class GreatController implements ParseListener {
+public abstract class GreatController<T> implements ParseListener {
 
 	private ProgressListener mProgressListener;
 	private AsyncResultListener mViewWaitingForAsyncResult;
@@ -20,15 +20,14 @@ public abstract class GreatController implements ParseListener {
 	private Gson mGSONParser;
 
 
-	public abstract Class<?> getModelClass();
 
 	public void loadModel(MODEL modelInstance){
 		this.mModel = modelInstance;
 
 	}
 
-	public  MODEL getModel(){
-		return mModel;
+	public  T getModel(){
+		return (T)mModel;
 	}
 
 	public GreatController(ProgressListener progressListener, 
@@ -100,7 +99,7 @@ public abstract class GreatController implements ParseListener {
 	public Gson getGSONParser() {
 		return mGSONParser;
 	}
-	
+
 	public void setGSONParserFromBuilder(GsonBuilder builder) {
 		mGSONParser = builder.create();
 	}
@@ -110,7 +109,7 @@ public abstract class GreatController implements ParseListener {
 	}
 
 	public MODEL getModelFromJSON(String json){
-		return (MODEL)getGSONParser().fromJson(json, getModelClass());
+		return (MODEL)getGSONParser().fromJson(json, getModel().getClass());
 	}
 
 

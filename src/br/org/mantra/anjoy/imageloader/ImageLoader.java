@@ -58,6 +58,7 @@ public class ImageLoader {
 		// threads operating off a shared unbounded queue.
 		//executorService=Executors.newFixedThreadPool(5);
 		executorService=Executors.newFixedThreadPool(20);
+		this.stub_id = R.drawable.stub;
 
 
 	}
@@ -169,7 +170,10 @@ public class ImageLoader {
 
 	public void displayImage(String url, ImageView imageView, int stub_id,int requiredSize)
 	{
-		this.stub_id = stub_id;
+
+		if (stub_id != 0)
+			this.stub_id = stub_id;
+
 		this.requiredSize = requiredSize;
 
 		//Store image and url in Map

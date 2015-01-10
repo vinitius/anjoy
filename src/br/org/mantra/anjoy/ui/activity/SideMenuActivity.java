@@ -6,12 +6,15 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import br.org.mantra.anjoy.R;
 
 public abstract class SideMenuActivity extends ProgressActivity {
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private FrameLayout mLeftMenuFrame;
+	private FrameLayout mRightMenuFrame;
 
 	public enum MENU_MODE{
 		LEFT,
@@ -21,33 +24,22 @@ public abstract class SideMenuActivity extends ProgressActivity {
 
 	protected abstract MENU_MODE getMenuMode();
 
-	@Override
-	protected void onCreate(Bundle arg0) {	
-		super.onCreate(arg0);
 
-
-		if (getMenuMode() == MENU_MODE.LEFT)
-			setContentView(R.layout.side_menu_activity_left);
-		else if (getMenuMode() == MENU_MODE.RIGHT)
-			setContentView(R.layout.side_menu_activity_right);
-		else if (getMenuMode() == MENU_MODE.BOTH)
-			setContentView(R.layout.side_menu_activity_both);	
-
-
-
-		bindMenu();
-
-	}
 
 	@SuppressLint("NewApi") 
-	private void bindMenu(){
-		mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+	private void bindMenu(){	
+
+		if (getMenuMode() == MENU_MODE.RIGHT || getMenuMode() == MENU_MODE.BOTH){
+
+			mRightMenuFrame.getLayoutParams().width = geRightMenuWidthInPx();
+			mRightMenuFrame.requestLayout();
+		}
 
 		if (getMenuMode() == MENU_MODE.LEFT || getMenuMode() == MENU_MODE.BOTH){
 
-			findViewById(getLeftMenu()).getLayoutParams().width = getLeftMenuWidthInPx();
-			findViewById(getLeftMenu()).requestLayout();
 
+			mLeftMenuFrame.getLayoutParams().width = getLeftMenuWidthInPx();
+			mLeftMenuFrame.requestLayout();
 			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 					getLeftDrawerToggleResource(), 
 					getLeftDrawerToggleTitleWhenOpen(), 
@@ -66,9 +58,6 @@ public abstract class SideMenuActivity extends ProgressActivity {
 
 
 			};
-
-
-
 			mDrawerLayout.setDrawerListener(mDrawerToggle);
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 			getActionBar().setHomeButtonEnabled(true);
@@ -76,11 +65,7 @@ public abstract class SideMenuActivity extends ProgressActivity {
 
 
 
-		if (getMenuMode() == MENU_MODE.RIGHT || getMenuMode() == MENU_MODE.BOTH){
 
-			findViewById(getRightMenu()).getLayoutParams().width = geRightMenuWidthInPx();
-			findViewById(getRightMenu()).requestLayout();
-		}
 
 
 
@@ -89,6 +74,7 @@ public abstract class SideMenuActivity extends ProgressActivity {
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
+
 
 		mDrawerToggle.syncState();
 	}
@@ -137,6 +123,26 @@ public abstract class SideMenuActivity extends ProgressActivity {
 
 		return R.id.view_main;
 	}
+
+	@Override
+	protected int getLayoutToBeInflated() {
+		if (getMenuMode() == MENU_MODE.LEFT)
+			return R.layout.side_menu_activity_left;
+		else if (getMenuMode() == MENU_MODE.RIGHT)
+			return R.layout.side_menu_activity_right;
+		else if (getMenuMode() == MENU_MODE.BOTH)
+			return R.layout.side_menu_activity_both;	
+
+		return R.layout.side_menu_activity_left;
+	}
+
+	@Override
+	protected void afterBindViews() {		
+		bindMenu();
+
+	}
+
+
 
 
 }
