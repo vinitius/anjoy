@@ -12,19 +12,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
+import br.org.mantra.anjoy.ui.fragment.GreatFragment;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public abstract class GreatActivity extends FragmentActivity {
 
 
 	private View mViewToInflate;	
-	private HashMap<String, Integer> mViewTagHash;
+	private HashMap<String, Integer> mViewTagHash;	
+	private String mCurrentFragmentTag;
+	private int[] mFragmentTransitionAnimations = {0,0}; 
 
 	protected abstract void beforeBindViews(Bundle savedInstance);
 	protected abstract void afterBindViews();
 	protected abstract void onSetListeners();
 	protected abstract int getLayoutToBeInflated();	
 	protected abstract int getRootViewContainer();
+
 
 
 	protected void doWhenActivityIsReady(){
@@ -60,32 +64,55 @@ public abstract class GreatActivity extends FragmentActivity {
 
 	public void renderView(int containerId,Fragment fragment,boolean shouldGoBack){
 		FragmentTransaction fragmentTransaction = 
-				getSupportFragmentManager().beginTransaction().
-				add(containerId, fragment);
+				getSupportFragmentManager().beginTransaction().setCustomAnimations(getFragmentTransitionAnimations()[0],
+						getFragmentTransitionAnimations()[1]).
+						add(containerId, fragment,fragment.getClass().getSimpleName());
 
-		if (shouldGoBack) fragmentTransaction.addToBackStack(null);
+		if (shouldGoBack){ 
+			fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+			((GreatFragment)fragment).setTagToGoBack(getCurrentFragmentTag());
+		}
 
-		fragmentTransaction.commitAllowingStateLoss();
+
+		fragmentTransaction.commit();	
+
 
 	}
 
-	public void renderView(Fragment fragment,boolean shouldGoBack){
+	public void renderView(Fragment fragment,boolean shouldGoBack){	
+
 		FragmentTransaction fragmentTransaction = 
-				getSupportFragmentManager().beginTransaction().
-				add(getRootViewContainer(), fragment);
+				getSupportFragmentManager().beginTransaction().setCustomAnimations(getFragmentTransitionAnimations()[0],
+						getFragmentTransitionAnimations()[1]).
+						add(getRootViewContainer(),fragment,fragment.getClass().getSimpleName());
 
-		if (shouldGoBack) fragmentTransaction.addToBackStack(null);
+		if (shouldGoBack){ 
+			fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+			((GreatFragment)fragment).setTagToGoBack(getCurrentFragmentTag());	
+		}
 
-		fragmentTransaction.commitAllowingStateLoss();
+
+
+
+		fragmentTransaction.commit();
+
+
+
+
+
+
+
 
 	}
 
 	public void renderAndReplaceView(int containerId,Fragment fragment,boolean shouldGoBack){
 		FragmentTransaction fragmentTransaction = 
-				getSupportFragmentManager().beginTransaction().
-				replace(containerId, fragment);
+				getSupportFragmentManager().beginTransaction().setCustomAnimations(getFragmentTransitionAnimations()[0],
+						getFragmentTransitionAnimations()[1]).
+						replace(containerId, fragment,fragment.getClass().getSimpleName());
 
-		if (shouldGoBack) fragmentTransaction.addToBackStack(null);
+		if (shouldGoBack) fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+
 
 		fragmentTransaction.commitAllowingStateLoss();
 
@@ -93,12 +120,17 @@ public abstract class GreatActivity extends FragmentActivity {
 
 	public void renderAndReplaceView(Fragment fragment,boolean shouldGoBack){
 		FragmentTransaction fragmentTransaction = 
-				getSupportFragmentManager().beginTransaction().
-				replace(getRootViewContainer(), fragment);
+				getSupportFragmentManager().beginTransaction().setCustomAnimations(getFragmentTransitionAnimations()[0],
+						getFragmentTransitionAnimations()[1]).
+						replace(getRootViewContainer(), fragment,fragment.getClass().getSimpleName());
 
-		if (shouldGoBack) fragmentTransaction.addToBackStack(null);
+
+		if (shouldGoBack) fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+
+
 
 		fragmentTransaction.commitAllowingStateLoss();
+
 
 	}
 
@@ -107,6 +139,27 @@ public abstract class GreatActivity extends FragmentActivity {
 		FragmentTransaction fragmentTransaction = 
 				getSupportFragmentManager().beginTransaction().remove(fragment);
 		fragmentTransaction.commit();
+
+	}
+
+	public void hideView(String tag){
+		Fragment fragmentToHide = getSupportFragmentManager().findFragmentByTag(tag);
+		if (fragmentToHide != null){
+			FragmentTransaction fragmentTransaction = 
+					getSupportFragmentManager().beginTransaction().hide(fragmentToHide);
+			fragmentTransaction.commit();
+		}
+
+	}
+
+	public void showView(String tag){		
+		Fragment fragmentToShow = getSupportFragmentManager().findFragmentByTag(tag);
+		if (fragmentToShow != null){			
+			FragmentTransaction fragmentTransaction = 
+					getSupportFragmentManager().beginTransaction().show(fragmentToShow);
+			fragmentTransaction.commit();
+			setCurrentFragmentTag(fragmentToShow.getTag());
+		}
 
 	}
 
@@ -169,6 +222,19 @@ public abstract class GreatActivity extends FragmentActivity {
 
 		}
 
+	}
+	public String getCurrentFragmentTag() {
+		return mCurrentFragmentTag;
+	}
+	public void setCurrentFragmentTag(String mCurrentFragmentTag) {
+		this.mCurrentFragmentTag = mCurrentFragmentTag;
+	}
+	public int[] getFragmentTransitionAnimations() {
+		return mFragmentTransitionAnimations;
+	}
+	public void setFragmentTransitionAnimations(
+			int[] mFragmentTransitionAnimations) {
+		this.mFragmentTransitionAnimations = mFragmentTransitionAnimations;
 	}
 
 

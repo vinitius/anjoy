@@ -17,7 +17,9 @@ public abstract class GreatFragment extends Fragment {
 
 	protected GreatActivity mActivity; 
 	private View mViewToInflate;	
+	private String mTagToGoBack;
 	private HashMap<String, Integer> mViewTagHash;
+
 
 	protected abstract void beforeBindViews(Bundle savedInstance);
 	protected abstract void afterBindViews();
@@ -28,8 +30,11 @@ public abstract class GreatFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {	
 		super.onAttach(activity);
-		if (activity instanceof GreatActivity)
+		if (activity instanceof GreatActivity){
 			mActivity = (GreatActivity)activity;
+			mActivity.setCurrentFragmentTag(getTag());
+			mActivity.hideView(getTagToGoBack());
+		}
 
 
 	}
@@ -48,7 +53,19 @@ public abstract class GreatFragment extends Fragment {
 		this.bindViews();			
 		this.afterBindViews();
 		this.onSetListeners();
+		this.getRootView().bringToFront();
+		this.getRootView().requestLayout();
+
 	}
+
+	@Override
+	public void onDetach() {	
+		super.onDetach();		
+		mActivity.showView(getTagToGoBack());
+	}
+
+
+
 
 
 
@@ -95,6 +112,13 @@ public abstract class GreatFragment extends Fragment {
 	public View getRootView(){
 		return mViewToInflate;
 	}
+	public String getTagToGoBack() {
+		return mTagToGoBack;
+	}
+	public void setTagToGoBack(String tag) {
+		this.mTagToGoBack = tag;
+	}
+
 
 
 

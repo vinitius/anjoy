@@ -1,6 +1,7 @@
 package br.org.mantra.anjoy.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -46,13 +47,15 @@ public abstract class SideMenuActivity extends ProgressActivity {
 					getLeftDrawerToggleTitleWhenClose()) {
 
 				public void onDrawerClosed(View view) {
-					super.onDrawerClosed(view);				
+					super.onDrawerClosed(view);						
 					invalidateOptionsMenu(); 
 				}
 
 
 				public void onDrawerOpened(View drawerView) {
-					super.onDrawerOpened(drawerView);					                   
+					super.onDrawerOpened(drawerView);
+					mLeftMenuFrame.bringToFront();
+					mLeftMenuFrame.requestLayout();
 					invalidateOptionsMenu();	                    
 				}
 
@@ -80,9 +83,17 @@ public abstract class SideMenuActivity extends ProgressActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
-		return mDrawerToggle.onOptionsItemSelected(item);
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {		
+		if(mDrawerToggle.onOptionsItemSelected(item))
+			return true;
+		return super.onOptionsItemSelected(item);
 	}
 
 

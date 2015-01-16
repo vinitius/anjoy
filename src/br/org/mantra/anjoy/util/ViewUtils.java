@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 public class ViewUtils {
 
-	public static void animateListViewItemRemoval(Animation anim,ListView listItems,int position){
+	public static void animateListViewItem(Animation anim,ListView listItems,int position){
 
 		int wantedPosition = position;
 		int firstPosition = listItems.getFirstVisiblePosition() - listItems.getHeaderViewsCount(); // This is the same as child #0
