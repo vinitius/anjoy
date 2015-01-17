@@ -1,14 +1,15 @@
 package br.org.mantra.anjoy.preference;
 
-import br.org.mantra.anjoy.util.LogUtils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import br.org.mantra.anjoy.util.LogUtils;
 
 public class AnjoyPreferences {
 
 	private final SharedPreferences preferences;
 	public static final String USER_INFO = "USER_INFO";
+	public static final String USER_INFO_STORED = "USER_INFO_STORED";
 
 
 
@@ -51,11 +52,15 @@ public class AnjoyPreferences {
 	}
 
 	public boolean isUserInfoStored(){
-		return this.preferences.getBoolean(USER_INFO, false);
+		return this.preferences.getBoolean(USER_INFO_STORED, false);
 	}
 
 	public void confirmUserInfoStored(){
-		this.savePreference(USER_INFO, true);
+		this.savePreference(USER_INFO_STORED, true);
+	}
+
+	public String getPreferenceByKey(String key){
+		return this.preferences.getString(key, null);
 	}
 
 }

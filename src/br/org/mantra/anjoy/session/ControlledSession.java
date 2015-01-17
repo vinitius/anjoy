@@ -44,6 +44,10 @@ public class ControlledSession extends Application{
 	public void set(String field, Object value){
 		sSessionData.put(field, value);
 	}
+	
+	public AnjoyPreferences getPreferences(){
+		return (AnjoyPreferences)get(APP_PREFERENCES);
+	}
 
 
 	@Override

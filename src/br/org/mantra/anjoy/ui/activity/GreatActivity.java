@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -235,6 +236,14 @@ public abstract class GreatActivity extends FragmentActivity {
 	public void setFragmentTransitionAnimations(
 			int[] mFragmentTransitionAnimations) {
 		this.mFragmentTransitionAnimations = mFragmentTransitionAnimations;
+	}
+
+	public void restartSelf(){
+		Intent i = new Intent(this, this.getClass());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		finish();
+
 	}
 
 
