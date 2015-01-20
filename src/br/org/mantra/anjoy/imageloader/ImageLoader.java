@@ -156,7 +156,7 @@ public class ImageLoader {
 			if (!shouldGetRoundCorner)
 				imageView.setImageBitmap(bitmap);
 			else
-				imageView.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bitmap, 200));
+				imageView.setImageBitmap(ImageUtils.getRoundedCornerBitmap(bitmap,200));
 		}
 		else
 		{
