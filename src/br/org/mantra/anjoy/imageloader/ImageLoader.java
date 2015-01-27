@@ -427,7 +427,7 @@ public class ImageLoader {
 		bitmap.compress(Bitmap.CompressFormat.valueOf(extension.toUpperCase()), 100, baos);
 		byte[] array = baos.toByteArray();
 
-		return Base64.encodeToString(array,Base64.DEFAULT);
+		return "data:image/"+extension+";base64,"+Base64.encodeToString(array,Base64.DEFAULT);
 
 	}
 

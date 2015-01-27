@@ -205,9 +205,15 @@ public abstract class GreatActivity extends FragmentActivity {
 
 	private void bindViews(){		
 		Field[] fields = getClass().getDeclaredFields();
-		if (fields.length == 0)
-			fields = getClass().getSuperclass().getDeclaredFields();
-		for(Field field : fields){			
+		Field[] parentFields = getClass().getSuperclass().getDeclaredFields();
+		List<Field> fieldList =  new ArrayList<Field>();
+		for(Field field: fields){
+			fieldList.add(field);
+		}
+		for(Field field: parentFields){
+			fieldList.add(field);
+		}
+		for(Field field : fieldList){			
 			field.setAccessible(true);
 			Class<?> fieldClass = field.getType();	
 			Integer viewId = mViewTagHash.get(field.getName());
