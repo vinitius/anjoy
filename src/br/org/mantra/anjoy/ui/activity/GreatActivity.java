@@ -75,7 +75,7 @@ public abstract class GreatActivity extends FragmentActivity {
 		}
 
 
-		fragmentTransaction.commit();	
+		fragmentTransaction.commitAllowingStateLoss();	
 
 
 	}
@@ -95,7 +95,7 @@ public abstract class GreatActivity extends FragmentActivity {
 
 
 
-		fragmentTransaction.commit();
+		fragmentTransaction.commitAllowingStateLoss();
 
 
 
@@ -139,7 +139,7 @@ public abstract class GreatActivity extends FragmentActivity {
 	public void removeView(Fragment fragment){
 		FragmentTransaction fragmentTransaction = 
 				getSupportFragmentManager().beginTransaction().remove(fragment);
-		fragmentTransaction.commit();
+		fragmentTransaction.commitAllowingStateLoss();
 
 	}
 
@@ -148,7 +148,7 @@ public abstract class GreatActivity extends FragmentActivity {
 		if (fragmentToHide != null){
 			FragmentTransaction fragmentTransaction = 
 					getSupportFragmentManager().beginTransaction().hide(fragmentToHide);
-			fragmentTransaction.commit();
+			fragmentTransaction.commitAllowingStateLoss();
 		}
 
 	}
@@ -158,7 +158,7 @@ public abstract class GreatActivity extends FragmentActivity {
 		if (fragmentToShow != null){			
 			FragmentTransaction fragmentTransaction = 
 					getSupportFragmentManager().beginTransaction().show(fragmentToShow);
-			fragmentTransaction.commit();
+			fragmentTransaction.commitAllowingStateLoss();
 			setCurrentFragmentTag(fragmentToShow.getTag());
 		}
 

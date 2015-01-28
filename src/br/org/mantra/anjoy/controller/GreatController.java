@@ -20,6 +20,9 @@ public abstract class GreatController<T> implements ParseListener {
 	private Gson mGSONParser;
 
 
+	public GreatController() {
+
+	}
 
 	public void loadModel(MODEL modelInstance){
 		this.mModel = modelInstance;
@@ -31,12 +34,11 @@ public abstract class GreatController<T> implements ParseListener {
 	}
 
 	public GreatController(ProgressListener progressListener, 
-			AsyncResultListener asyncResultListener,
-			MODEL modelInstance) {
+			AsyncResultListener asyncResultListener) {
 		mGSONParser = new Gson();
 		setProgressListener(progressListener);
 		setViewWaitingForAsyncResult(asyncResultListener);
-		loadModel(modelInstance);	
+
 	}
 
 

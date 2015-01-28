@@ -6,7 +6,7 @@ import java.util.HashMap;
 import android.app.Application;
 import br.org.mantra.anjoy.preference.AnjoyPreferences;
 
-public class ControlledSession extends Application{
+public abstract class ControlledSession extends Application{
 
 	private static ControlledSession sSession;
 	private static HashMap<String, Object> sSessionData;
@@ -34,7 +34,14 @@ public class ControlledSession extends Application{
 			}
 
 		}		
-		set(APP_PREFERENCES, new AnjoyPreferences(this));		
+		set(APP_PREFERENCES, new AnjoyPreferences(this));
+		try {
+			set(SESSION_CONTROLLER,getSessionController().newInstance());
+		} catch (InstantiationException e) {			
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {			
+			e.printStackTrace();
+		}
 	}
 
 	public Object get(String field){
@@ -44,17 +51,20 @@ public class ControlledSession extends Application{
 	public void set(String field, Object value){
 		sSessionData.put(field, value);
 	}
-	
+
 	public AnjoyPreferences getPreferences(){
 		return (AnjoyPreferences)get(APP_PREFERENCES);
 	}
+
+	public abstract Class<?> getSessionController();
 
 
 	@Override
 	public void onCreate() {	
 		super.onCreate();
 		sSession = this;
-		collectSessionData();
+		collectSessionData();		
+
 	}
 
 }

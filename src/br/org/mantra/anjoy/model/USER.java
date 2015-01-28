@@ -11,6 +11,11 @@ public class USER extends MODEL {
 	/**
 	 * 
 	 */
+	
+	public USER(){
+		super();
+	} 
+	
 	private static final long serialVersionUID = 2233789820671734704L;
 
 	public void saveToPreferences(){
