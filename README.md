@@ -1,17 +1,6 @@
-anjoy
-=====
+Sh*t happens, in any case...
+============================
 
-Awesome fast code for android applications. Anjoy uses:
+Just a repo with a lot of code that has saved me many times.
 
-GSON;
 
-Crouton;
-
-StaggeredGrid;
-
-RippleView;
-
-TouchGallery;
-
-... work in progress ...
-========================
